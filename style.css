@@ -44,7 +44,6 @@ body{
 .header {
     margin-top: 7vh;
     padding: 1rem;
-    display: none;
 }
 
 .header :where(.title, .subtitle){
@@ -117,6 +116,7 @@ body{
     padding: 2rem 1rem 12rem;
     max-height: 100vh;
     overflow-y: auto;
+    display: none;
 }
 
 .chat-list .message.incoming {
@@ -127,7 +127,8 @@ body{
     display: flex;
     gap: 1.5rem;
     width: 100%;
-    align-items: center;
+    align-items: flex-start;
+    justify-content: flex-start;
 }
 
 .chat-list .message .avatar {

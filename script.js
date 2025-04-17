@@ -1,5 +1,6 @@
 const typingForm = document.querySelector(".typing-form");
 const chatList = document.querySelector(".chat-list");
+const suggestionList = document.querySelector(".suggestion-list");
 const toggleBtn = document.querySelector("#toggle-theme-btn");
 
 let userMessage = null;
@@ -40,12 +41,13 @@ const createMessageElement = (content, ...classes) => {
 
 const generateAPIResponse = async (promptText, incomingMessageDiv) => {
     const textElement = incomingMessageDiv.querySelector(".text");
-    
+    const apiKey = "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";
+
     try {
         const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
             method: "POST",
             headers: {
-                "Authorization": "Bearer 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",
+                "Authorization": `Bearer ${apiKey}`,
                 "Content-Type": "application/json"
             },
             body: JSON.stringify({
@@ -63,24 +65,40 @@ const generateAPIResponse = async (promptText, incomingMessageDiv) => {
                 ]
             })
         });
-        
+
         const data = await response.json();
-        const reply = data.choices[0].message.content;
-        const result = marked.parse(reply);
-        textElement.innerHTML = result;
+
+        if (data.choices && data.choices.length > 0 && data.choices[0].message?.content) {
+            const reply = data.choices[0].message.content;
+            const result = marked.parse(reply);
+            textElement.innerHTML = result;
+        } else {
+            textElement.innerHTML = "No response received from the AI Because the apiKey expired.";
+        }
+
         incomingMessageDiv.classList.remove("loading");
         localStorage.setItem("chats", chatList.innerHTML);
     }
-    
-    catch(error){
-        console.log(error);
+
+    catch (error) {
+        console.error("API error:", error);
+        textElement.innerHTML = "⚠️ Error fetching response.";
+        incomingMessageDiv.classList.remove("loading");
     }
 }
+
 
 document.querySelector('#delete-btn').addEventListener('click', ()=>{
     localStorage.removeItem("chats");
     location.reload();
 })
+
+const handleSuggestionRequest = (requestValue) => {
+    typingForm.querySelector(".typing-input").value = requestValue;
+    document.body.querySelector('.header').style.display = "none";
+    chatList.style.display = "block";
+    handleOutgoingChat();
+}
 
 const showLoadingAnimation = () => {
     const html = `
@@ -130,6 +148,9 @@ const handleOutgoingChat = () => {
     userMessage = typingForm.querySelector(".typing-input").value.trim();
     if (!userMessage) return;
 
+    document.body.querySelector('.header').style.display = "none";
+    chatList.style.display = "block";
+
     const html = `<div class="message-content">
                 <img src="images/user.jpg" alt="User Image" class="avatar">
                 <div class="text"></div>
@@ -144,6 +165,5 @@ const handleOutgoingChat = () => {
 
 typingForm.addEventListener("submit", (e) => {
     e.preventDefault();
-
     handleOutgoingChat();
 })

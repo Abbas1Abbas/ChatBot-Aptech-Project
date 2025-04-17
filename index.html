@@ -6,34 +6,29 @@
     <!-- Google Fonts For Icons -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
     <!-- external css link -->
-     <link rel="stylesheet" href="style.css">
-    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+    <title>Gemini</title>
 </head>
 <body>
-    
-    <!-- header  -->
+
     <header class="header">
         <h2 class="title">Hello, there</h2>
         <h4 class="subtitle">How can I help you today?</h2>
-        
+
         <ul class="suggestion-list">
-            <li class="suggestion">
+            <li onclick="handleSuggestionRequest('Help me plan a game night with my 5 best friends under $100.')" class="suggestion">
                 <h4 class="text">Help me plan a game night with my 5 best friends under $100.</div>
                 <span class="icon material-symbols-rounded">draw</span>
             </li>
-            <li class="suggestion">
+            <li onclick="handleSuggestionRequest('What are the best tips to improve my pubic speaking skills?')" class="suggestion">
                 <h4 class="text">What are the best tips to improve my pubic speaking skills?</div>
                 <span class="icon material-symbols-rounded">lightbulb</span>
             </li>
-            <li class="suggestion">
+            <li onclick="handleSuggestionRequest('Can you can help me find latest news on web development?')" class="suggestion">
                 <h4 class="text">Can you can help me find latest news on web development?</div>
                 <span class="icon material-symbols-rounded">explore</span>
             </li>
-            <li class="suggestion">
-                <h4 class="text">Help me plan a game night with my 5 best friends under $100.</div>
-                <span class="icon material-symbols-rounded">draw</span>
-            </li>
-            <li class="suggestion">
+            <li onclick="handleSuggestionRequest('Write Javascript code to sum all elements in an array.')" class="suggestion">
                 <h4 class="text">Write Javascript code to sum all elements in an array.</div>
                 <span class="icon material-symbols-rounded">code</span>
             </li>
